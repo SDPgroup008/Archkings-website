@@ -4,75 +4,76 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated color tokens for ArchKings futuristic design */
-  --background: #0a192f; /* Dark navy */
-  --foreground: #ffffff; /* White */
-  --card: #000000; /* Black */
-  --card-foreground: #f8f8f8; /* Light gray */
-  --popover: #000000; /* Black */
-  --popover-foreground: #ffffff; /* White */
-  --primary: #d4af37; /* Gold */
-  --primary-foreground: #0a192f; /* Dark navy */
-  --secondary: #f8f8f8; /* Light gray */
-  --secondary-foreground: #0a192f; /* Dark navy */
-  --muted: #000000; /* Black */
-  --muted-foreground: #f8f8f8; /* Light gray */
-  --accent: #d4af37; /* Gold */
-  --accent-foreground: #0a192f; /* Dark navy */
-  --destructive: #dc2626; /* Red */
-  --destructive-foreground: #ffffff; /* White */
-  --border: #374151; /* Dark gray */
-  --input: #000000; /* Black */
-  --ring: #d4af37; /* Gold */
-  --chart-1: #0a192f; /* Dark navy */
-  --chart-2: #d4af37; /* Gold */
-  --chart-3: #f8f8f8; /* Light gray */
-  --chart-4: #000000; /* Black */
-  --chart-5: #dc2626; /* Red */
-  --radius: 0.5rem;
-  --sidebar: #0a192f; /* Dark navy */
-  --sidebar-foreground: #ffffff; /* White */
-  --sidebar-primary: #0a192f; /* Dark navy */
-  --sidebar-primary-foreground: #d4af37; /* Gold */
-  --sidebar-accent: #d4af37; /* Gold */
-  --sidebar-accent-foreground: #0a192f; /* Dark navy */
-  --sidebar-border: #374151; /* Dark gray */
-  --sidebar-ring: #d4af37; /* Gold */
+  /* Updated to royal, futuristic color palette with black, gold, and royal purple */
+  --background: #000000; /* Deep black for luxury */
+  --foreground: #ffffff; /* Pure white for contrast */
+  --card: #0a0a0a; /* Dark card background */
+  --card-foreground: #f8fafc; /* Light text on cards */
+  --popover: #1a1a1a; /* Dark popover */
+  --popover-foreground: #ffffff; /* White popover text */
+  --primary: #ffd700; /* Royal gold */
+  --primary-foreground: #000000; /* Black text on gold */
+  --secondary: #6b46c1; /* Royal purple */
+  --secondary-foreground: #ffffff; /* White on purple */
+  --muted: #1a1a1a; /* Muted dark */
+  --muted-foreground: #94a3b8; /* Muted light text */
+  --accent: #00ffff; /* Cyan accent for futuristic feel */
+  --accent-foreground: #000000; /* Black on cyan */
+  --destructive: #ef4444; /* Red for destructive actions */
+  --destructive-foreground: #ffffff; /* White on red */
+  --border: #333333; /* Dark border */
+  --input: #1a1a1a; /* Dark input background */
+  --ring: #ffd700; /* Gold focus ring */
+  --chart-1: #ffd700; /* Gold */
+  --chart-2: #6b46c1; /* Purple */
+  --chart-3: #00ffff; /* Cyan */
+  --chart-4: #ffffff; /* White */
+  --chart-5: #ef4444; /* Red */
+  --radius: 0.75rem; /* Increased radius for modern feel */
+  --sidebar: #000000; /* Black sidebar */
+  --sidebar-foreground: #ffffff; /* White sidebar text */
+  --sidebar-primary: #ffd700; /* Gold sidebar primary */
+  --sidebar-primary-foreground: #000000; /* Black on gold */
+  --sidebar-accent: #6b46c1; /* Purple sidebar accent */
+  --sidebar-accent-foreground: #ffffff; /* White on purple */
+  --sidebar-border: #333333; /* Dark sidebar border */
+  --sidebar-ring: #ffd700; /* Gold sidebar ring */
 }
 
 .dark {
-  --background: #0a192f;
+  /* Same colors for dark mode consistency */
+  --background: #000000;
   --foreground: #ffffff;
-  --card: #000000;
-  --card-foreground: #f8f8f8;
-  --popover: #000000;
+  --card: #0a0a0a;
+  --card-foreground: #f8fafc;
+  --popover: #1a1a1a;
   --popover-foreground: #ffffff;
-  --primary: #d4af37;
-  --primary-foreground: #0a192f;
-  --secondary: #f8f8f8;
-  --secondary-foreground: #0a192f;
-  --muted: #000000;
-  --muted-foreground: #f8f8f8;
-  --accent: #d4af37;
-  --accent-foreground: #0a192f;
-  --destructive: #dc2626;
+  --primary: #ffd700;
+  --primary-foreground: #000000;
+  --secondary: #6b46c1;
+  --secondary-foreground: #ffffff;
+  --muted: #1a1a1a;
+  --muted-foreground: #94a3b8;
+  --accent: #00ffff;
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #374151;
-  --input: #000000;
-  --ring: #d4af37;
-  --chart-1: #0a192f;
-  --chart-2: #d4af37;
-  --chart-3: #f8f8f8;
-  --chart-4: #000000;
-  --chart-5: #dc2626;
-  --sidebar: #0a192f;
+  --border: #333333;
+  --input: #1a1a1a;
+  --ring: #ffd700;
+  --chart-1: #ffd700;
+  --chart-2: #6b46c1;
+  --chart-3: #00ffff;
+  --chart-4: #ffffff;
+  --chart-5: #ef4444;
+  --sidebar: #000000;
   --sidebar-foreground: #ffffff;
-  --sidebar-primary: #0a192f;
-  --sidebar-primary-foreground: #d4af37;
-  --sidebar-accent: #d4af37;
-  --sidebar-accent-foreground: #0a192f;
-  --sidebar-border: #374151;
-  --sidebar-ring: #d4af37;
+  --sidebar-primary: #ffd700;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #6b46c1;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #333333;
+  --sidebar-ring: #ffd700;
 }
 
 @theme inline {
@@ -113,9 +114,9 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Added custom fonts for ArchKings */
+  /* Added royal, elegant fonts */
   --font-heading: "Playfair Display", serif;
-  --font-body: "Source Sans Pro", sans-serif;
+  --font-body: "Inter", sans-serif;
 }
 
 @layer base {
@@ -123,36 +124,64 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body;
   }
 
-  /* Added custom animations for futuristic effects */
+  /* Enhanced animations for royal, futuristic effects */
   .animate-fade-in {
-    animation: fadeIn 0.8s ease-in-out;
+    animation: fadeIn 1.2s ease-in-out;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
+    animation: slideUp 0.8s ease-out;
   }
 
   .animate-glow {
-    animation: glow 2s ease-in-out infinite alternate;
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-gold {
+    animation: pulseGold 2s ease-in-out infinite;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #ffd700, #ffed4e, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+  }
+
+  .royal-border {
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #ffd700, #6b46c1, #00ffff) 1;
   }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(50px);
   }
   to {
     opacity: 1;
@@ -162,26 +191,56 @@
 
 @keyframes glow {
   from {
-    box-shadow: 0 0 5px var(--primary);
+    box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--primary);
   }
   to {
-    box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary);
+    box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary), 0 0 40px var(--primary);
   }
 }
 
-/* Added parallax and hover effects */
-.parallax-bg {
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
+@keyframes pulseGold {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Enhanced hover effects for royal feel */
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+}
+
+/* Royal crown and geometric patterns */
+.crown-pattern::before {
+  content: "♔";
+  font-size: 1.5rem;
+  color: var(--primary);
+  margin-right: 0.5rem;
+}
+
+.geometric-bg {
+  background-image: radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(107, 70, 193, 0.1) 0%, transparent 50%);
 }
