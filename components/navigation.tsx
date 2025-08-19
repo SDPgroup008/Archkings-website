@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Crown } from "lucide-react"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -27,60 +27,64 @@ export function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/95 backdrop-blur-md border-b border-border" : "bg-transparent"
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        isScrolled ? "glass-effect border-b border-primary/30" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">A</span>
+        <div className="flex items-center justify-between h-20">
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center animate-glow">
+                <Crown className="text-primary-foreground h-6 w-6" />
+              </div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent rounded-full animate-pulse-gold"></div>
             </div>
-            <span className="font-heading font-bold text-xl text-foreground">ArchKings</span>
+            <span className="font-heading font-bold text-2xl gradient-text group-hover:scale-105 transition-transform">
+              ArchKings
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
+                className="relative text-foreground hover:text-primary transition-all duration-300 font-medium text-lg group"
               >
                 {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
             <Link
               href="/admin"
-              className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium text-sm"
+              className="text-muted-foreground hover:text-accent transition-colors duration-300 font-medium"
             >
               Admin
             </Link>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground animate-glow">Get Quote</Button>
+            <Button className="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground px-8 py-3 text-lg font-semibold animate-glow hover-lift royal-border">
+              Get Royal Quote
+            </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden hover:bg-primary/20 hover-glow"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X /> : <Menu />}
+            {isMobileMenuOpen ? <X className="text-primary" /> : <Menu className="text-primary" />}
           </Button>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-card border-t border-border">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="md:hidden glass-effect border-t border-primary/30 animate-fade-in">
+            <div className="px-2 pt-4 pb-6 space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="block px-3 py-2 text-foreground hover:text-primary transition-colors duration-200"
+                  className="block px-4 py-3 text-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
@@ -88,13 +92,15 @@ export function Navigation() {
               ))}
               <Link
                 href="/admin"
-                className="block px-3 py-2 text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
+                className="block px-4 py-3 text-muted-foreground hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-300"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Admin
               </Link>
-              <div className="px-3 py-2">
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">Get Quote</Button>
+              <div className="px-4 py-3">
+                <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground animate-glow">
+                  Get Royal Quote
+                </Button>
               </div>
             </div>
           </div>
