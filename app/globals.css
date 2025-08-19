@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color tokens for ArchKings futuristic design */
+  --background: #0a192f; /* Dark navy */
+  --foreground: #ffffff; /* White */
+  --card: #000000; /* Black */
+  --card-foreground: #f8f8f8; /* Light gray */
+  --popover: #000000; /* Black */
+  --popover-foreground: #ffffff; /* White */
+  --primary: #d4af37; /* Gold */
+  --primary-foreground: #0a192f; /* Dark navy */
+  --secondary: #f8f8f8; /* Light gray */
+  --secondary-foreground: #0a192f; /* Dark navy */
+  --muted: #000000; /* Black */
+  --muted-foreground: #f8f8f8; /* Light gray */
+  --accent: #d4af37; /* Gold */
+  --accent-foreground: #0a192f; /* Dark navy */
+  --destructive: #dc2626; /* Red */
+  --destructive-foreground: #ffffff; /* White */
+  --border: #374151; /* Dark gray */
+  --input: #000000; /* Black */
+  --ring: #d4af37; /* Gold */
+  --chart-1: #0a192f; /* Dark navy */
+  --chart-2: #d4af37; /* Gold */
+  --chart-3: #f8f8f8; /* Light gray */
+  --chart-4: #000000; /* Black */
+  --chart-5: #dc2626; /* Red */
+  --radius: 0.5rem;
+  --sidebar: #0a192f; /* Dark navy */
+  --sidebar-foreground: #ffffff; /* White */
+  --sidebar-primary: #0a192f; /* Dark navy */
+  --sidebar-primary-foreground: #d4af37; /* Gold */
+  --sidebar-accent: #d4af37; /* Gold */
+  --sidebar-accent-foreground: #0a192f; /* Dark navy */
+  --sidebar-border: #374151; /* Dark gray */
+  --sidebar-ring: #d4af37; /* Gold */
+}
+
+.dark {
+  --background: #0a192f;
+  --foreground: #ffffff;
+  --card: #000000;
+  --card-foreground: #f8f8f8;
+  --popover: #000000;
+  --popover-foreground: #ffffff;
+  --primary: #d4af37;
+  --primary-foreground: #0a192f;
+  --secondary: #f8f8f8;
+  --secondary-foreground: #0a192f;
+  --muted: #000000;
+  --muted-foreground: #f8f8f8;
+  --accent: #d4af37;
+  --accent-foreground: #0a192f;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #374151;
+  --input: #000000;
+  --ring: #d4af37;
+  --chart-1: #0a192f;
+  --chart-2: #d4af37;
+  --chart-3: #f8f8f8;
+  --chart-4: #000000;
+  --chart-5: #dc2626;
+  --sidebar: #0a192f;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #0a192f;
+  --sidebar-primary-foreground: #d4af37;
+  --sidebar-accent: #d4af37;
+  --sidebar-accent-foreground: #0a192f;
+  --sidebar-border: #374151;
+  --sidebar-ring: #d4af37;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Added custom fonts for ArchKings */
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Source Sans Pro", sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Added custom animations for futuristic effects */
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px var(--primary);
+  }
+  to {
+    box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary);
+  }
+}
+
+/* Added parallax and hover effects */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+}
