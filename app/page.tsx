@@ -11,10 +11,18 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Navigation />
       <HeroSection />
-      <ServicesSection />
-      <TeamSection />
-      <ProjectsSection />
-      <ContactSection />
+      <section id="services">
+        <ServicesSection />
+      </section>
+      <section id="projects">
+        <ProjectsSection />
+      </section>
+      <section id="team">
+        <TeamSection />
+      </section>
+      <section id="contact">
+        <ContactSection />
+      </section>
       <Footer />
     </main>
   )
