@@ -63,6 +63,19 @@ export function Navigation() {
     setIsMobileMenuOpen(false)
   }
 
+  const handleButtonScroll = (href: string) => {
+    const targetId = href.replace("#", "")
+    const targetElement = document.getElementById(targetId)
+
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }
+    setIsMobileMenuOpen(false)
+  }
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
@@ -106,7 +119,7 @@ export function Navigation() {
             </button>
 
             <Button
-              onClick={(e) => handleSmoothScroll(e, "#contact")}
+              onClick={() => handleButtonScroll("#contact")}
               className="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground px-8 py-3 text-lg font-semibold animate-glow hover-lift royal-border"
             >
               Get Royal Quote
@@ -152,7 +165,7 @@ export function Navigation() {
 
               <div className="px-4 py-3">
                 <Button
-                  onClick={(e) => handleSmoothScroll(e, "#contact")}
+                  onClick={() => handleButtonScroll("#contact")}
                   className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground animate-glow"
                 >
                   Get Royal Quote
