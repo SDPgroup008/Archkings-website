@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Crown } from "lucide-react"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [adminClickCount, setAdminClickCount] = useState(0)
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +19,25 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    if (adminClickCount > 0) {
+      const timeout = setTimeout(() => {
+        setAdminClickCount(0)
+      }, 3000)
+      return () => clearTimeout(timeout)
+    }
+  }, [adminClickCount])
+
+  const handleAdminAccess = () => {
+    const newCount = adminClickCount + 1
+    setAdminClickCount(newCount)
+
+    if (newCount >= 3) {
+      router.push("/admin")
+      setAdminClickCount(0)
+    }
+  }
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -56,12 +78,16 @@ export function Navigation() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
-            <Link
-              href="/admin"
-              className="text-muted-foreground hover:text-accent transition-colors duration-300 font-medium"
+
+            <button
+              onClick={handleAdminAccess}
+              className="flex items-center space-x-1 opacity-20 hover:opacity-40 transition-opacity duration-300"
+              title={`Click ${3 - adminClickCount} more times`}
             >
-              Admin
-            </Link>
+              <div className="w-2 h-2 bg-muted-foreground rounded-full"></div>
+              <div className="w-2 h-2 bg-muted-foreground rounded-full"></div>
+            </button>
+
             <Button className="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground px-8 py-3 text-lg font-semibold animate-glow hover-lift royal-border">
               Get Royal Quote
             </Button>
@@ -90,13 +116,20 @@ export function Navigation() {
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href="/admin"
-                className="block px-4 py-3 text-muted-foreground hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-300"
-                onClick={() => setIsMobileMenuOpen(false)}
+
+              <button
+                onClick={() => {
+                  handleAdminAccess()
+                  setIsMobileMenuOpen(false)
+                }}
+                className="flex items-center justify-center w-full px-4 py-3 opacity-20 hover:opacity-40 transition-opacity duration-300"
               >
-                Admin
-              </Link>
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-muted-foreground rounded-full"></div>
+                  <div className="w-2 h-2 bg-muted-foreground rounded-full"></div>
+                </div>
+              </button>
+
               <div className="px-4 py-3">
                 <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground animate-glow">
                   Get Royal Quote
