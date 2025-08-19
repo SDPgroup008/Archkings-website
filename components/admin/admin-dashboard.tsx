@@ -42,6 +42,8 @@ interface HeroContent {
   subtitle: string
   description: string
   backgroundImage: string
+  backgroundVideo: string
+  mediaType: "image" | "video"
   ctaText: string
   ctaLink: string
 }
@@ -84,6 +86,8 @@ export function AdminDashboard() {
     subtitle: "",
     description: "",
     backgroundImage: "",
+    backgroundVideo: "",
+    mediaType: "image",
     ctaText: "",
     ctaLink: "",
   })
@@ -135,6 +139,7 @@ export function AdminDashboard() {
     newsImage?: File
     newsVideo?: File
     heroBackground?: File
+    heroVideo?: File
     teamImage?: File
   }>({})
 
@@ -248,15 +253,20 @@ export function AdminDashboard() {
     setIsLoading(true)
     try {
       let backgroundImage = heroContent.backgroundImage
+      let backgroundVideo = heroContent.backgroundVideo
 
       if (selectedFiles.heroBackground) {
         backgroundImage = await uploadFile(selectedFiles.heroBackground, "archkings/hero/images")
       }
 
-      const updatedHero = { ...heroContent, backgroundImage }
+      if (selectedFiles.heroVideo) {
+        backgroundVideo = await uploadFile(selectedFiles.heroVideo, "archkings/hero/videos")
+      }
+
+      const updatedHero = { ...heroContent, backgroundImage, backgroundVideo }
       await setDoc(doc(db, "archkings", "content", "hero", "main"), updatedHero)
       setHeroContent(updatedHero)
-      setSelectedFiles({ ...selectedFiles, heroBackground: undefined })
+      setSelectedFiles({ ...selectedFiles, heroBackground: undefined, heroVideo: undefined })
     } catch (error) {
       console.error("Error updating hero:", error)
     }
@@ -591,23 +601,74 @@ export function AdminDashboard() {
                 </div>
 
                 <div>
-                  <Label htmlFor="hero-background">Background Image</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      id="hero-background"
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) =>
-                        setSelectedFiles({
-                          ...selectedFiles,
-                          heroBackground: e.target.files?.[0],
-                        })
-                      }
-                      className="flex-1"
-                    />
-                    <Upload className="h-4 w-4 text-muted-foreground" />
+                  <Label>Background Media Type</Label>
+                  <div className="flex gap-4 mt-2">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="mediaType"
+                        value="image"
+                        checked={heroContent.mediaType === "image"}
+                        onChange={(e) =>
+                          setHeroContent({ ...heroContent, mediaType: e.target.value as "image" | "video" })
+                        }
+                      />
+                      Image
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="mediaType"
+                        value="video"
+                        checked={heroContent.mediaType === "video"}
+                        onChange={(e) =>
+                          setHeroContent({ ...heroContent, mediaType: e.target.value as "image" | "video" })
+                        }
+                      />
+                      Video
+                    </label>
                   </div>
                 </div>
+
+                {heroContent.mediaType === "image" ? (
+                  <div>
+                    <Label htmlFor="hero-background">Background Image</Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="hero-background"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) =>
+                          setSelectedFiles({
+                            ...selectedFiles,
+                            heroBackground: e.target.files?.[0],
+                          })
+                        }
+                        className="flex-1"
+                      />
+                      <Upload className="h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <Label htmlFor="hero-video">Background Video</Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="hero-video"
+                        type="file"
+                        accept="video/*"
+                        onChange={(e) =>
+                          setSelectedFiles({
+                            ...selectedFiles,
+                            heroVideo: e.target.files?.[0],
+                          })
+                        }
+                        className="flex-1"
+                      />
+                      <Upload className="h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </div>
+                )}
 
                 <Button
                   onClick={handleUpdateHero}
