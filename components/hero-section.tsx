@@ -61,15 +61,26 @@ export function HeroSection() {
       }
 
       try {
-        const querySnapshot = await getDocs(collection(db, "archkings", "content", "heroSlides"))
-        if (!querySnapshot.empty) {
-          const slides = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as HeroSlide[]
-          if (slides.length > 0) {
-            setHeroSlides(slides)
+        const heroDoc = await getDocs(collection(db, "archkings", "content", "hero"))
+        if (!heroDoc.empty) {
+          const heroData = heroDoc.docs[0].data()
+          const slide: HeroSlide = {
+            id: "main",
+            title: heroData.title || "Royal Architecture Mastery",
+            subtitle: heroData.subtitle || "Where Luxury Meets Innovation in Every Structure We Create",
+            description: heroData.description || "",
+            mediaUrl:
+              heroData.mediaType === "video"
+                ? heroData.backgroundVideo
+                : heroData.backgroundImage || "/placeholder.svg?height=1080&width=1920",
+            mediaType: heroData.mediaType || "image",
+            ctaText: heroData.ctaText || "Begin Your Royal Journey",
+            ctaLink: heroData.ctaLink || "#services",
           }
+          setHeroSlides([slide])
         }
       } catch (error) {
-        console.error("Error loading hero slides:", error)
+        console.error("Error loading hero content:", error)
       }
       setLoading(false)
     }
@@ -106,7 +117,7 @@ export function HeroSection() {
   const currentSlideData = heroSlides[currentSlide]
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         {currentSlideData.mediaType === "video" ? (
           <video key={currentSlideData.id} autoPlay muted loop playsInline className="w-full h-full object-cover">
