@@ -2,28 +2,55 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Play, Crown, Sparkles } from "lucide-react"
+import { ArrowRight, Crown, Sparkles, ChevronLeft, ChevronRight } from "lucide-react"
 import { collection, getDocs } from "firebase/firestore"
 import { db, isFirebaseConfigured } from "@/lib/firebase"
 
-interface HeroContent {
+interface HeroSlide {
+  id: string
   title: string
   subtitle: string
   description: string
-  backgroundImage: string
+  mediaUrl: string
+  mediaType: "image" | "video"
   ctaText: string
   ctaLink: string
 }
 
 export function HeroSection() {
-  const [heroContent, setHeroContent] = useState<HeroContent>({
-    title: "Royal Architecture Mastery",
-    subtitle: "Where Luxury Meets Innovation in Every Structure We Create",
-    description: "",
-    backgroundImage: "/placeholder.svg?height=1080&width=1920",
-    ctaText: "Begin Your Royal Journey",
-    ctaLink: "#services",
-  })
+  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([
+    {
+      id: "1",
+      title: "Royal Architecture Mastery",
+      subtitle: "Where Luxury Meets Innovation in Every Structure We Create",
+      description: "",
+      mediaUrl: "/placeholder.svg?height=1080&width=1920",
+      mediaType: "image",
+      ctaText: "Begin Your Royal Journey",
+      ctaLink: "#services",
+    },
+    {
+      id: "2",
+      title: "Crafting Architectural Excellence",
+      subtitle: "Transforming Visions into Magnificent Realities",
+      description: "",
+      mediaUrl: "/placeholder.svg?height=1080&width=1920",
+      mediaType: "image",
+      ctaText: "Explore Our Mastery",
+      ctaLink: "#projects",
+    },
+    {
+      id: "3",
+      title: "Building Tomorrow's Landmarks",
+      subtitle: "Where Innovation Meets Timeless Design",
+      description: "",
+      mediaUrl: "/placeholder.svg?height=1080&width=1920",
+      mediaType: "image",
+      ctaText: "Start Your Project",
+      ctaLink: "#contact",
+    },
+  ])
+  const [currentSlide, setCurrentSlide] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -34,19 +61,36 @@ export function HeroSection() {
       }
 
       try {
-        const querySnapshot = await getDocs(collection(db, "archkings", "content", "hero"))
+        const querySnapshot = await getDocs(collection(db, "archkings", "content", "heroSlides"))
         if (!querySnapshot.empty) {
-          const heroData = querySnapshot.docs[0].data() as HeroContent
-          setHeroContent(heroData)
+          const slides = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as HeroSlide[]
+          if (slides.length > 0) {
+            setHeroSlides(slides)
+          }
         }
       } catch (error) {
-        console.error("Error loading hero content:", error)
+        console.error("Error loading hero slides:", error)
       }
       setLoading(false)
     }
 
     loadHeroContent()
   }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+    }, 6000)
+    return () => clearInterval(interval)
+  }, [heroSlides.length])
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
+  }
 
   if (loading) {
     return (
@@ -59,15 +103,25 @@ export function HeroSection() {
     )
   }
 
+  const currentSlideData = heroSlides[currentSlide]
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <div
-          className="w-full h-full bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(107, 70, 193, 0.3), rgba(0, 0, 0, 0.9)), url('${heroContent.backgroundImage}')`,
-          }}
-        />
+        {currentSlideData.mediaType === "video" ? (
+          <video key={currentSlideData.id} autoPlay muted loop playsInline className="w-full h-full object-cover">
+            <source src={currentSlideData.mediaUrl} type="video/mp4" />
+          </video>
+        ) : (
+          <div
+            className="w-full h-full bg-cover bg-center bg-no-repeat transition-all duration-1000"
+            style={{
+              backgroundImage: `url('${currentSlideData.mediaUrl}')`,
+            }}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-purple-900/30 to-black/90"></div>
+
         <div className="absolute top-20 left-10 w-20 h-20 border-2 border-primary/30 rotate-45 animate-float"></div>
         <div
           className="absolute bottom-32 right-16 w-16 h-16 border-2 border-accent/30 rotate-12 animate-float"
@@ -79,6 +133,20 @@ export function HeroSection() {
         ></div>
       </div>
 
+      <button
+        onClick={prevSlide}
+        className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20 glass-effect p-3 rounded-full hover:bg-primary/20 transition-all duration-300 hover-lift"
+      >
+        <ChevronLeft className="h-6 w-6 text-primary" />
+      </button>
+
+      <button
+        onClick={nextSlide}
+        className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 glass-effect p-3 rounded-full hover:bg-primary/20 transition-all duration-300 hover-lift"
+      >
+        <ChevronRight className="h-6 w-6 text-primary" />
+      </button>
+
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto animate-fade-in">
         <div className="flex items-center justify-center mb-6">
           <Crown className="h-16 w-16 text-primary animate-pulse-gold mr-4" />
@@ -86,31 +154,34 @@ export function HeroSection() {
         </div>
 
         <h1 className="font-heading text-6xl md:text-8xl font-bold mb-8 leading-tight">
-          <span className="gradient-text">{heroContent.title}</span>
+          <span className="gradient-text">{currentSlideData.title}</span>
         </h1>
 
         <p className="text-2xl md:text-3xl text-foreground/90 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-          {heroContent.subtitle}
+          {currentSlideData.subtitle}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+        <div className="flex justify-center items-center mb-16">
           <Button
             size="lg"
             className="bg-gradient-to-r from-primary via-secondary to-primary hover:from-secondary hover:via-primary hover:to-secondary text-primary-foreground px-12 py-6 text-xl font-bold animate-glow hover-lift royal-border"
           >
             <Crown className="mr-3 h-6 w-6" />
-            {heroContent.ctaText}
+            {currentSlideData.ctaText}
             <ArrowRight className="ml-3 h-6 w-6" />
           </Button>
+        </div>
 
-          <Button
-            variant="outline"
-            size="lg"
-            className="glass-effect border-primary/50 text-primary hover:bg-primary/20 px-12 py-6 text-xl font-semibold hover-lift bg-transparent"
-          >
-            <Play className="mr-3 h-6 w-6" />
-            Royal Portfolio
-          </Button>
+        <div className="flex justify-center space-x-3 mb-8">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide ? "bg-primary animate-pulse-gold" : "bg-primary/30 hover:bg-primary/60"
+              }`}
+            />
+          ))}
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 animate-slide-up">

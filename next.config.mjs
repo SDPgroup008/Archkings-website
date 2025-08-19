@@ -9,10 +9,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  swcMinify: false,
+  swcMinify: true, // Enable SWC minification
   experimental: {
-    forceSwcTransforms: false,
+    forceSwcTransforms: true, // Force SWC to handle modern JS
   },
-}
+  transpilePackages: ["firebase", "@firebase", "protobufjs"], // Transpile Firebase and protobufjs
+};
 
-export default nextConfig
+export default nextConfig;
