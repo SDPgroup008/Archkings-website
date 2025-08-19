@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -40,12 +42,26 @@ export function Navigation() {
   }
 
   const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/services", label: "Services" },
-    { href: "/projects", label: "Projects" },
-    { href: "/contact", label: "Contact" },
+    { href: "#hero", label: "Home" },
+    { href: "#services", label: "Services" },
+    { href: "#projects", label: "Projects" },
+    { href: "#team", label: "Team" },
+    { href: "#contact", label: "Contact" },
   ]
+
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const targetId = href.replace("#", "")
+    const targetElement = document.getElementById(targetId)
+
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }
+    setIsMobileMenuOpen(false)
+  }
 
   return (
     <nav
@@ -69,14 +85,15 @@ export function Navigation() {
 
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.href}
                 href={item.href}
-                className="relative text-foreground hover:text-primary transition-all duration-300 font-medium text-lg group"
+                onClick={(e) => handleSmoothScroll(e, item.href)}
+                className="relative text-foreground hover:text-primary transition-all duration-300 font-medium text-lg group cursor-pointer"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full"></span>
-              </Link>
+              </a>
             ))}
 
             <button
@@ -88,7 +105,10 @@ export function Navigation() {
               <div className="w-2 h-2 bg-muted-foreground rounded-full"></div>
             </button>
 
-            <Button className="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground px-8 py-3 text-lg font-semibold animate-glow hover-lift royal-border">
+            <Button
+              onClick={(e) => handleSmoothScroll(e, "#contact")}
+              className="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground px-8 py-3 text-lg font-semibold animate-glow hover-lift royal-border"
+            >
               Get Royal Quote
             </Button>
           </div>
@@ -107,14 +127,14 @@ export function Navigation() {
           <div className="md:hidden glass-effect border-t border-primary/30 animate-fade-in">
             <div className="px-2 pt-4 pb-6 space-y-2">
               {navItems.map((item) => (
-                <Link
+                <a
                   key={item.href}
                   href={item.href}
-                  className="block px-4 py-3 text-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => handleSmoothScroll(e, item.href)}
+                  className="block px-4 py-3 text-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300 cursor-pointer"
                 >
                   {item.label}
-                </Link>
+                </a>
               ))}
 
               <button
@@ -131,7 +151,10 @@ export function Navigation() {
               </button>
 
               <div className="px-4 py-3">
-                <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground animate-glow">
+                <Button
+                  onClick={(e) => handleSmoothScroll(e, "#contact")}
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground animate-glow"
+                >
                   Get Royal Quote
                 </Button>
               </div>
